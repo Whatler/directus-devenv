@@ -2,7 +2,6 @@ services:
   directus:
     image: directus/directus:${DIRECTUS_IMAGE_VERSION:-latest}
     container_name: ${DIRECTUS_CONTAINER_NAME:-directus}
-    # restart: unless-stopped
     ports:
       - "${DIRECTUS_PORT:-8055}:8055"
     volumes:
@@ -10,7 +9,6 @@ services:
       - ${SHARED_VOLUME_ROOT_PATH:-.}/templates:/directus/templates
     env_file:
       - ./env/directus.env
-      # - ./env/postgres.env
     depends_on:
       redis:
         condition: service_healthy
