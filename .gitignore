@@ -1,0 +1,8 @@
+*.env
+!*.template.env
+*.conf
+!*.template.conf
+redis_data/
+postgres_data/
+extensions/
+templates/
