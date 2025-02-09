@@ -32,7 +32,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 512M
+          memory: 1024M
     healthcheck:
       test: ["CMD-SHELL", "[ $$(redis-cli ping) = 'PONG' ]"]
       interval: 10s
