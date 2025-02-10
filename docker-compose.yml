@@ -3,7 +3,7 @@ services:
     image: directus/directus:${DIRECTUS_IMAGE_VERSION:-latest}
     container_name: ${DIRECTUS_CONTAINER_NAME:-directus}
     ports:
-      - "${DIRECTUS_PORT:-8055}:8055"
+      - "127.0.0.1:${DIRECTUS_PORT:-8055}:8055"
     volumes:
       - ${SHARED_VOLUME_ROOT_PATH:-.}/extensions:/directus/extensions
       - ${SHARED_VOLUME_ROOT_PATH:-.}/templates:/directus/templates
