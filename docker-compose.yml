@@ -25,7 +25,7 @@ services:
     ports:
       - "127.0.0.1:${REDIS_PORT:-6379}:6379"
     volumes:
-      - ${SHARED_VOLUME_ROOT_PATH:-.}/redis_data:/data
+      - redis_data:/data
       - ./conf/redis.conf:/usr/local/etc/redis/redis.conf
     env_file:
       - ./env/redis.env
@@ -49,7 +49,7 @@ services:
     ports:
       - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
     volumes:
-      - ${SHARED_VOLUME_ROOT_PATH:-.}/postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     env_file:
       - ./env/postgres.env
     networks:
@@ -95,14 +95,4 @@ networks:
 
 volumes:
   redis_data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ${SHARED_VOLUME_ROOT_PATH:-.}/redis_data
   postgres_data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ${SHARED_VOLUME_ROOT_PATH:-.}/postgres_data
