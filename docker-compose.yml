@@ -15,7 +15,9 @@ services:
       postgres:
         condition: service_healthy
     networks:
-      - app-network
+      - directus-network
+      - redis-network
+      - postgres-network
 
   redis:
     image: redis:${REDIS_IMAGE_VERSION:-alpine}
@@ -28,7 +30,7 @@ services:
     env_file:
       - ./env/redis.env
     networks:
-      - app-network
+      - redis-network
     deploy:
       resources:
         limits:
@@ -55,7 +57,7 @@ services:
     volumes:
       - ${SHARED_VOLUME_ROOT_PATH:-.}/postgres_data:/var/lib/postgresql/data
     networks:
-      - app-network
+      - postgres-network
     healthcheck:
       test: ["CMD", "pg_isready", "--host=localhost", "--username=postgres"]
       interval: 10s
@@ -73,6 +75,8 @@ services:
     environment:
       - NODE_ENV=development
     command: bash -c "if [ -n \"${NODE_PACKAGES}\" ]; then npm install ${NODE_PACKAGES}; fi && tail -f /dev/null"
+    networks:
+      - directus-network
 
   nginx:
     image: nginx:${NGINX_IMAGE_VERSION:-latest}
@@ -84,10 +88,14 @@ services:
     depends_on:
       - directus
     networks:
-      - app-network
+      - directus-network
 
 networks:
-  app-network:
+  directus-network:
+    driver: bridge
+  redis-network:
+    driver: bridge
+  postgres-network:
     driver: bridge
 
 volumes:
