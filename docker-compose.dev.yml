@@ -3,7 +3,7 @@ services:
     image: directus/directus:${DIRECTUS_IMAGE_VERSION:-latest}
     container_name: ${DIRECTUS_CONTAINER_NAME:-directus}
     ports:
-      - "127.0.0.1:${DIRECTUS_PORT:-8055}:8055"
+      - "${DIRECTUS_PORT:-8055}:8055"
     volumes:
       - ${SHARED_VOLUME_ROOT_PATH:-.}/extensions:/directus/extensions
       - ${SHARED_VOLUME_ROOT_PATH:-.}/templates:/directus/templates
@@ -23,7 +23,7 @@ services:
     image: redis:${REDIS_IMAGE_VERSION:-alpine}
     container_name: ${REDIS_CONTAINER_NAME:-redis}
     ports:
-      - "127.0.0.1:${REDIS_PORT:-6379}:6379"
+      - "${REDIS_PORT:-6379}:6379"
     volumes:
       - redis_data:/data
       - ./conf/redis.conf:/usr/local/etc/redis/redis.conf
@@ -47,7 +47,7 @@ services:
     image: postgres:${POSTGRES_IMAGE_VERSION:-alpine}
     container_name: ${POSTGRES_CONTAINER_NAME:-postgres}
     ports:
-      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+      - "${POSTGRES_PORT:-5432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     env_file:
@@ -79,7 +79,6 @@ services:
     container_name: ${NODE_CONTAINER_NAME:-node}
     working_dir: /usr/src/app
     volumes:
-      - ${SSH_KEY_PAIR_FOLDER_PATH:-~/.ssh}:/root/.ssh:ro
       - ${SHARED_VOLUME_ROOT_PATH:-.}/extensions:/usr/src/app/extensions
       - ${SHARED_VOLUME_ROOT_PATH:-.}/templates:/usr/src/app/templates
     environment:
