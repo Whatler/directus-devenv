@@ -26,20 +26,30 @@ cp conf/nginx.template.conf conf/nginx.conf
 
 3. **Start the Services**: Use Docker Compose to start all the services.
 ```sh
-docker compose up -d
+docker compose -f docker-compose.dev.yml up -d
 ```
 
 ## Development
 
 - **Extensions**: Place your Directus extensions in the `extensions` directory.
 - **Templates**: Place your Directus templates in the `templates` directory.
-- **Directus Configuration**: Modify the Directus configuration in the `env/directus.env` file.
+
+## Production
+
+To start the services in production mode, use the production Docker Compose file:
+```sh
+docker compose -f docker-compose.prod.yml up -d
+```
 
 ## Stopping the Services
 
 To stop the services, run:
 ```sh
-docker compose down
+docker compose -f docker-compose.dev.yml down
+```
+or for production:
+```sh
+docker compose -f docker-compose.prod.yml down
 ```
 
 ## Additional Information
